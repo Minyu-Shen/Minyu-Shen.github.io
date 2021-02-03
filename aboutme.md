@@ -1,16 +1,7 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to go on a date with me
+subtitle: Minyu Shen
 ---
 
-My name is Inigo Montoya. I have the following qualities:
-
-- I rock a great mustache
-- I'm extremely loyal to my family
-
-What else do you need?
-
-### My story
-
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](https://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+不定期更新博客，主要是督促自己把一些“看似自己非常清楚”的问题写下来，如果能给有缘人提供一点帮助，那就更好了。博客更新的内容可能是：我今天刚好看到一个有趣的知识点，然后用自己的话语以及简单的数学模型来描述；看到一篇有趣的论文，然后自己总结一下。

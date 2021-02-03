@@ -2,15 +2,9 @@
 layout: post
 title:  Random incidence
 subtitle: A bus stop example
-# date:   2020-12-20 22:20:21 +0800
-cover-img: /assets/img/path.jpg
-thumbnail-img: /assets/img/thumb.png
-share-img: /assets/img/path.jpg
 tags: [probability]
 usemathjax: true
 ---
-
-## 引言
 
 今天讲一下Random Incidence，我也不太确定Random Incidence的中文翻译是什么，就用英文来表示吧 ᕕ( ՞ ᗜ ՞ )ᕗ。可以先看一个现实中的例子，来看一下它的由来。
 
