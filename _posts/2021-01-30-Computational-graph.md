@@ -20,7 +20,7 @@ Autograd，自动微分，是整个pytorch框架的核心功能。我一直是�
 
 ### 简单例子
 
-(抄自 https://www.youtube.com/watch?v=MswxJw-8PvE&ab_channel=ElliotWaite，包括图片也是直接复制的)
+(抄自 [Elliot Waite](https://www.youtube.com/watch?v=MswxJw-8PvE&ab_channel=ElliotWaite))
 
 从例子开始讲具体的流程，假设现在有a，b两个tensor，然后把它们乘起来得到c，如下：
 
