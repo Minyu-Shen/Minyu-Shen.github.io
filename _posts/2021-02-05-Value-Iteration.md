@@ -42,7 +42,7 @@ That is, for every state in the state space, the state value should be greater t
 
 The proof is based on the **Banach fixed-point theorem** (a.k.a contraction mapping theorem), which works in the complete metric space. (Although the name "Banach" appears in this theorem, it is not defined in the Banach space.) The theorem basically says that for a complete metric space, applying a contraction operator on the elements of the set again and again would eventually leads us to a fixed point. In the value iteration, it echoes the optimal policy. 
 
-> **Banach fixed-point theorem**: Let $(X,d)$ be a non-empty complete metric space, with a contraction mapping $T:X\mapsto X$. Then $T$ admits a unique fixed point $x^{*}$ in $X$ (i.e. $T(x^{*}) = x^{*}$). The fixed point can be obtained by a sequence of $f(f(f(\ldots f(x))))$ until convergence.
+> **Banach fixed-point theorem**: Let $(X,d)$ be a non-empty complete metric space, with a contraction mapping $T:X\to X$. Then $T$ admits a unique fixed point $x^{*}$ in $X$ (i.e. $T(x^{*}) = x^{*}$). The fixed point is the limiting point of a sequence of $f(f(f(\ldots f(x))))$ until convergence.
 
 There are a lot of terminologies to be digested, which are introduced in the appendix. All we need to prove is just that the bellman optimality operator is a contraction. 
 
@@ -165,10 +165,16 @@ A metric space is said to be complete if every possible cauchy sequence of the e
 - Existence:
 
   All we need to show is that a sequence induced by the contraction operator is a Cauchy sequence, since the latter will converge to a single element in $X$. Let's denote the contraction operator as $f(\cdot)$, and the corresponding sequence is:
+
+  
   $$
   x^k = f^k(x), k=1,2,\ldots
   $$
+  
+
   Taking two elements $x^m,x^n, m>>n$ , we iteratively apply the triangular inequality property of the metric space:
+
+  
   $$
   \begin{eqnarray}
   d(x^m,x^n) &\leq& d(x^{m},x^{m-1}) + d(x^{m-1}, x^n) \nonumber \\
@@ -185,20 +191,34 @@ A metric space is said to be complete if every possible cauchy sequence of the e
   
   \end{eqnarray}
   $$
+  
+
   As long as we set $m$ sufficiently larger than $n$ , $\gamma^n$ dominates; and when $n\to\infty$, the RHS approaches 0. 
+
+  
   $$
   \lim_{n\to\infty} \frac{\gamma^n}{1-\gamma}d(f(x), x) = 0
   $$
+  
+
   So for any given $\epsilon$, we can always find a $n$ such that $d(x^m,x^n)\leq \epsilon$.
 
 - Uniqueness:
 
   Proof by contradiction: Suppose now there are two fixed points $x_1^*, x_2^*$. Then we know the distance between them before and after applying the operator should be the same, i.e.,
+
+  
   $$
   d(f(x_1^*), f(x_2^*)) = d(x_1^*,x_2^*)
   $$
+  
+
   However, the definition of contraction operator tells us that:
+
+  
   $$
   d(f(x_1^*), f(x_2^*)) \leq \gamma d(x_1^*,x_2^*), \gamma\in[0,1)
   $$
+  
+
   , which results in the contradiction. 
