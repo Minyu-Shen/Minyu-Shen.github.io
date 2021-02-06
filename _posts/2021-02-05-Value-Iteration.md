@@ -9,63 +9,89 @@ usemathjax: true
 In the last policy iteration blog, we prove that starting from an initial pocliy, the iteration process of "evaluation -> greedy improvement -> evaluation -> greedy improvement ..." can guarantee an optimal policy. We note that at each step of evaluation, we have to iterate it many times to get a trustable state value estimate. A natural question is then: can we just do the greedy improvement before we get the true state value estimate of the policy? The answer is yes and it is in fact the value iteration algorithm. 
 
 Recall that given a policy, the evluaiton process is:
+
+
 $$
 v^{k+1}_{\pi}(s) = \sum_{a\in A}\pi(a|s)\left( R^a_s + \gamma \sum_{s'\in S}{P_{ss'}^a v^k_{\pi}(s')} \right)
 $$
+
+
 The value iteration process is that we only take the above backup once and get the q value function. Then we directly do the greedy improvement without averaging all the q values by $\pi(a\mid s)$. This turns out to be the bellman optimality update:
+
+
 $$
 v^{k+1}(s) = \max_{a}\left\{ R^a_s + \gamma \sum_{s'\in S}{P_{ss'}^a v^k_{\pi}(s')} \right\}
 $$
+
+
 We can iteratively apply the above formula and finally we can get the optimal value function and the corresponding optimal policy. (But before the algorithm converges, there is no explicit policy). 
 
-> **Theorem**: For any finite MDP, there exists an optimal policy $\pi*$ such that it is better than or equal to every other possible policy $\pi$.
+> **Theorem**: For any finite MDP, there exists an optimal policy $\pi^{*}$ such that it is better than or equal to every other possible policy $\pi$.
 
 But wait... You may ask that what do you mean by "better than"? Formally, we define it ($\geq$) as:
+
+
 $$
 \pi^1 \geq \pi^2 \;\text{, if}\; V^{\pi^1}(s)\geq V^{\pi^2}(s), \forall s\in S
 $$
+
+
 That is, for every state in the state space, the state value should be greater than the other one. 
 
 ### Banach fixed-point theorem
 
 The proof is based on the **Banach fixed-point theorem** (a.k.a contraction mapping theorem), which works in the complete metric space. (Although the name "Banach" appears in this theorem, it is not defined in the Banach space.) The theorem basically says that for a complete metric space, applying a contraction operator on the elements of the set again and again would eventually leads us to a fixed point. In the value iteration, it echoes the optimal policy. 
 
-> **Banach fixed-point theorem**: Let $(X,d)$ be a non-empty complete metric space, with a contraction mapping $T:X\mapsto X$. Then $T$ admits a unique fixed point $x^*$ in $X$ (i.e. $T(x^*) = x^*$). The fixed point can be obtained by a sequence of $f(f(f(\ldots f(x))))$ until convergence.
+> **Banach fixed-point theorem**: Let $(X,d)$ be a non-empty complete metric space, with a contraction mapping $T:X\mapsto X$. Then $T$ admits a unique fixed point $x^{*}$ in $X$ (i.e. $T(x^{*}) = x^{*}$). The fixed point can be obtained by a sequence of $f(f(f(\ldots f(x))))$ until convergence.
 
 There are a lot of terminologies to be digested, which are introduced in the appendix. All we need to prove is just that the bellman optimality operator is a contraction. 
 
 #### Contraction
 
 A operator $ f(\cdot)$defined on the elements of the metric space $(X,d)$ is a contraction if:
+
+
 $$
 \exists \gamma\in [0,1), d(f(x_1), f(x_2)) \leq \gamma d(x_1,x_2), \forall x_1,x_2 \in X
 $$
+
+
 It means that after applying the opeartor $f(\cdot)$, the two points (elements) of $X$ get closer to each other. The "closer" is measured by metric $d$. Note that $\gamma$ should not be 1, otherwise it is only a **nonexpansive** operator; e.g., the projection operator onto a closed convex set. 
 
 In the following, let's choose $\infty$-norm (or max-norm) as our distance metric, i.e., 
+
+
 $$
 d(x_1,x_2) = \lVert x_1-x_2 \rVert_{\infty} = \max_{i\in [1,n]} \lvert x_1^i-x_2^i \rvert
 $$
+
+
 $X$ can also consist of functions instead of vectors, 
+
+
 $$
 d(u,v) = \lVert u-v \rVert_{\infty} = \max_{s\in S} \lvert u(s) - v(s) \rvert
 $$
+
+
 where $u$ and $v$ are two functions. And this is exactly we want to use because our aim is to measure how close any two state value functions are (i.e., $v$ or $q$ value functions). 
 
-###Bellman optimality operator
+###  Bellman optimality operator
 
 Denoting the bellman optimality operator (Eq. 2) as $O$, 
+
+
 $$
 \begin{eqnarray} 
-\lVert Ov_1(s) - Ov_2(s) \rVert_{\infty} &=&  \max_{s} \lvert Ov_1(s) - Ov_2(s) \rvert \nonumber \\
+\lVert Ov_1(s) - Ov_2(s) \rVert_{\infty} &=&  \max_{s} \left\vert Ov_1(s) - Ov_2(s) \right\vert \nonumber \\
 
-&=& \max_{s}\lvert \max_a{\{ R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_1(s') \}} - \max_a{\{ R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_2(s') \}}\rvert   \nonumber \\
+&=& \max_{s}\left\vert \max_a{\{ R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_1(s') \}} - \max_a{\{ R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_2(s') \}}\right\vert   \nonumber \\
 
-&\leq& \max_{s}\lvert \max_a{\{ R^a_s+\gamma\mathcal{P}^a_{ss'}v_1(s') - R^a_s-\gamma\mathcal{P}^a_{ss'}v_2(s') \}}\rvert   \nonumber \\
+&\leq& \max_{s}\left\vert \max_a{\{ R^a_s+\gamma\mathcal{P}^a_{ss'}v_1(s') - R^a_s-\gamma\mathcal{P}^a_{ss'}v_2(s') \}}\right\vert   \nonumber \\
 
-&=& \gamma\max_{s}\lvert \max_a{\{ \sum_{s'\in S}\mathcal{P}^a_{ss'}(v_1(s')-v_2(s')) \}}\rvert   \nonumber \\
+&=& \gamma\max_{s}\left\vert \max_a{\{ \sum_{s'\in S}\mathcal{P}^a_{ss'}(v_1(s')-v_2(s')) \}}\right\vert   \nonumber \\
 
-&\leq& \gamma\max_{s}\lvert \max_a{\{ \max_{s'}\lvert v_1(s')-v_2(s') \rvert\}}\rvert   \nonumber \\
+&\leq& \gamma\max_{s}\left\vert \max_a{\{ \max_{s'}\lvert v_1(s')-v_2(s') \rvert\}}\right\vert   \nonumber \\
 
 &=& \gamma \max_{s'}\lvert v_1(s')-v_2(s') \rvert  \nonumber \\
 
@@ -73,6 +99,8 @@ $$
 
 \end{eqnarray}
 $$
+
+
 The first and second steps are applying the definition of max-norm and Bellman optimality operator, respectively.
 
 In the third step, the two max operations over $a$ will obtain different $a$, but we want to combine them. To this end, we assume that the first maximization achieves its maximum at $a$. Then by replacing the second maximization's best action, we must have reduced its value (or kept the same if the two maximizations coincidently induce the same action).
@@ -84,22 +112,26 @@ In the sixth step, since the summands no longer contain $a$ and $s$, so the two 
 ### Bellman expectation operator
 
 In addition ,we can also prove that the bellman expectation backup, denoted $B$, is a contraction operator. (This also explains why the policy evaluation process in the policy iteration algorithm does converge to a true state value function.)
+
+
 $$
 \begin{eqnarray} 
 \lVert Bv_1(s) - Bv_2(s) \rVert_{\infty} &=&  \max_{s} \lvert Bv_1(s) - Bv_2(s) \rvert \nonumber \\
 
-&=& \max_{s}\left| \sum_a{\pi(a|s)}{\left(R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_1(s')\right)} - \sum_a{\pi(a|s)}{\left(R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_2(s')\right)} \right|  \nonumber \\
+&=& \max_{s}\left\vert \sum_a{\pi(a\mid s)}{\left(R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_1(s')\right)} - \sum_a{\pi(a\mid s)}{\left(R^a_s+\gamma\sum_{s'\in S}\mathcal{P}^a_{ss'}v_2(s')\right)} \right\vert  \nonumber \\
 
-&=& \gamma\max_{s}\left| \sum_a{\pi(a|s)}\sum_{s'\in S}\mathcal{P}^a_{ss'}{\left(v_1(s') - v_2(s') \right)} \right| \nonumber \\
+&=& \gamma\max_{s}\left\vert \sum_a{\pi(a\mid s)}\sum_{s'\in S}\mathcal{P}^a_{ss'}{\left(v_1(s') - v_2(s') \right)} \right\vert \nonumber \\
 
-&\leq& \gamma\max_{s}\left| \max_{s'}{\lvert v_1(s') - v_2(s')\rvert} \right| \nonumber \\
+&\leq& \gamma\max_{s}\left\vert \max_{s'}{\lvert v_1(s') - v_2(s')\rvert} \right\vert \nonumber \\
 
-&=&  \gamma\max_{s'}\left|{v_1(s') - v_2(s')} \right| \nonumber \\
+&=&  \gamma\max_{s'}\left\vert {v_1(s') - v_2(s')} \right\vert \nonumber \\
 
 &=& \gamma\lVert (v_1(s')-v_2(s')) \rVert_\infty   \nonumber \\
 
 \end{eqnarray}
 $$
+
+
 This proof is similar to the $O$ operator and in fact simpler. 
 
 In the fourth step, given any $s$, instead of averaging the environment dynamic $\mathcal{P}_{ss'}^a$ and policy $\pi$, we can  just simply pick the $s'$ that maximize the $\lvert v_1(s')-v_2(s') \rvert$. (This inequality scaling seems to be very loose.)
@@ -170,22 +202,3 @@ A metric space is said to be complete if every possible cauchy sequence of the e
   d(f(x_1^*), f(x_2^*)) \leq \gamma d(x_1^*,x_2^*), \gamma\in[0,1)
   $$
   , which results in the contradiction. 
-
-
-
-```
-<!---
-noting $O$ as the bellman optimality operator, it is indeed a contraction operator. Proof is as follows:
-$$
-\begin{eqnarray} 
-\lVert Ov_1(\mathbf{s}_k) - Ov_2(\mathbf{s}_k) \rVert_{\infty} &=&  \lVert \max_a{\{ \mathbf{R}^a+\gamma\mathcal{P}^av_1(\mathbf{s}_k) \}} - \max_{a^\prime}{\{ \mathbf{R}^{a^\prime}+\gamma\mathcal{P}^{a^\prime}v_1(\mathbf{s}_k) \}} \rVert_{\infty} \nonumber \\
-
-&\leq& \lVert \max_a{\{ \mathbf{R}^a+\gamma\mathcal{P}^av_1(\mathbf{s}_k) } - {\{ \mathbf{R}^{a}+\gamma\mathcal{P}^{a}v_1(\mathbf{s}_k) \}} \rVert_{\infty} \nonumber \\
-
-&=& \gamma\lVert \max_a{\{ \mathcal{P}^a(v_1(\mathbf{s}_k)-v_2(\mathbf{s}_k)) \}} \rVert_{\infty} \nonumber \\
-
-&\leq& \gamma\max_{s_k\in S} \{ \lvert \max_{a}\{\mathcal{P}^a(v_1(\mathbf{s}_k)-v_2(\mathbf{s}_k)) \}\rvert \} \nonumber \\
-
-\end{eqnarray}
-$$
-```
