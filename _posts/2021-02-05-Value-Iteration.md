@@ -40,7 +40,7 @@ That is, for every state in the state space, the state value should be greater t
 
 ### Banach fixed-point theorem
 
-The proof is based on the **Banach fixed-point theorem** (a.k.a contraction mapping theorem), which works in the complete metric space. (Although the name "Banach" appears in this theorem, it is not defined in the Banach space.) The theorem basically says that for a complete metric space, applying a contraction operator on the elements of the set again and again would eventually leads us to a fixed point. In the value iteration, it echoes the optimal policy. 
+The proof is based on the **Banach fixed-point theorem** (a.k.a contraction mapping theorem), which works in the complete metric space. (The name "Banach" appears in this theorem, because the complete metric space is also called Banach space.) The theorem basically says that for a complete metric space, applying a contraction operator on the elements of the set again and again would eventually leads us to a fixed point. In the value iteration, it echoes the optimal policy. 
 
 > **Banach fixed-point theorem**: Let $(X,d)$ be a non-empty complete metric space, with a contraction mapping $T:X\to X$. Then $T$ admits a unique fixed point $x^{\star}$ in $X$ (i.e. $T(x^{\star}) = x^{\star}$). The fixed point is the limiting point of a sequence of $f(f(f(\ldots f(x))))$ until convergence.
 
