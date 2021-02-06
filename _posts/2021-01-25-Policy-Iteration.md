@@ -20,7 +20,7 @@ v^{k+1}_{\pi}(s) = \sum_{a\in A}\pi(a|s)\left( \sum_{r\in \R^1}r \sum_{s'\in S}P
 $$
 
 
-上面这个式子里，我完整的展开了one-step-look-ahead的所有概率公式（我的数学抽象能力比较差，只有这样才能理解╮（￣▽￣）╭）。这里transition operator, $ P(s',r\mid s,a)$, 完整地描述了随机切换到下一个state，同时给一个随机reward。我们认为离开当前state $s$的时候才得到reward，所以reward取决于$s,a$和环境，把marginalization去掉：
+上面这个式子里，我完整的展开了one-step-look-ahead的所有概率公式。这里transition operator, $ P(s',r\mid s,a)$, 完整地描述了随机切换到下一个state，同时给一个随机reward。我们认为离开当前state $s$的时候才得到reward，所以reward取决于$s,a$和环境，把marginalization去掉：
 
 
 $$
