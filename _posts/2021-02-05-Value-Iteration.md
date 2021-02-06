@@ -8,7 +8,7 @@ usemathjax: true
 
 In the last policy iteration blog, we prove that starting from an initial pocliy, the iteration process of "evaluation -> greedy improvement -> evaluation -> greedy improvement ..." can guarantee an optimal policy. We note that at each step of evaluation, we have to iterate it many times to get a trustable state value estimate. A natural question is then: can we just do the greedy improvement before we get the true state value estimate of the policy? The answer is yes and it is in fact the value iteration algorithm. 
 
-Recall that given a policy, the evluaiton process is:
+Recall that given a policy, the evaluation process is:
 
 
 $$
@@ -26,7 +26,7 @@ $$
 
 We can iteratively apply the above formula and finally we can get the optimal value function and the corresponding optimal policy. (But before the algorithm converges, there is no explicit policy). 
 
-> **Theorem**: For any finite MDP, there exists an optimal policy $\pi^{*}$ such that it is better than or equal to every other possible policy $\pi$.
+> **Theorem**: For any finite MDP, there exists an optimal policy $\pi^\star$ such that it is better than or equal to every other possible policy $\pi$.
 
 But wait... You may ask that what do you mean by "better than"? Formally, we define it ($\geq$) as:
 
@@ -42,7 +42,7 @@ That is, for every state in the state space, the state value should be greater t
 
 The proof is based on the **Banach fixed-point theorem** (a.k.a contraction mapping theorem), which works in the complete metric space. (Although the name "Banach" appears in this theorem, it is not defined in the Banach space.) The theorem basically says that for a complete metric space, applying a contraction operator on the elements of the set again and again would eventually leads us to a fixed point. In the value iteration, it echoes the optimal policy. 
 
-> **Banach fixed-point theorem**: Let $(X,d)$ be a non-empty complete metric space, with a contraction mapping $T:X\to X$. Then $T$ admits a unique fixed point $x^{*}$ in $X$ (i.e. $T(x^{*}) = x^{*}$). The fixed point is the limiting point of a sequence of $f(f(f(\ldots f(x))))$ until convergence.
+> **Banach fixed-point theorem**: Let $(X,d)$ be a non-empty complete metric space, with a contraction mapping $T:X\to X$. Then $T$ admits a unique fixed point $x^{\star}$ in $X$ (i.e. $T(x^{\star}) = x^{\star}$). The fixed point is the limiting point of a sequence of $f(f(f(\ldots f(x))))$ until convergence.
 
 There are a lot of terminologies to be digested, which are introduced in the appendix. All we need to prove is just that the bellman optimality operator is a contraction. 
 
@@ -56,7 +56,7 @@ $$
 $$
 
 
-It means that after applying the opeartor $f(\cdot)$, the two points (elements) of $X$ get closer to each other. The "closer" is measured by metric $d$. Note that $\gamma$ should not be 1, otherwise it is only a **nonexpansive** operator; e.g., the projection operator onto a closed convex set. 
+It means that after applying the operator $f(\cdot)$, the two points (elements) of $X$ get closer to each other. The "closer" is measured by metric $d$. Note that $\gamma$ should not be 1, otherwise it is only a **nonexpansive** operator; e.g., the projection operator onto a closed convex set. 
 
 In the following, let's choose $\infty$-norm (or max-norm) as our distance metric, i.e., 
 
@@ -205,7 +205,7 @@ A metric space is said to be complete if every possible cauchy sequence of the e
 
 - Uniqueness:
 
-  Proof by contradiction: Suppose now there are two fixed points $x_1^*, x_2^*$. Then we know the distance between them before and after applying the operator should be the same, i.e.,
+  Proof by contradiction: Suppose now there are two fixed points $x_1^\star, x_2^\star$. Then we know the distance between them before and after applying the operator should be the same, i.e.,
 
   
   $$
