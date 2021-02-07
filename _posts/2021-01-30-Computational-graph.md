@@ -6,7 +6,7 @@ tags: [deep learning]
 usemathjax: true
 ---
 
-Autograd，自动微分，是整个pytorch框架的核心功能。我一直是只了解原理，但却不知框架是如何实现的，所以在写代码时（尤其是在实现强化学习里的actor-critic方法，或者GAN），有点迷糊什么时候detach，什么时候retain_graph之类的。这次看到一个非常好的教程，所以打算把理解总结一下，下一篇讲一些具体的例子。
+Autograd，自动微分，是整个pytorch框架的核心功能。我一直是只了解原理，但却不知框架是如何实现的，这次看到一个非常好的教程，所以打算把理解总结一下。
 
 用pytorch实现微分计算的基本流程是：
 

@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  Basic concepts in traffic assignment
-subtitle: Network structure
+title:  Feasible link and path flow set
+subtitle: Convexity and underdetermination 
 tags: [research, linear algebra]
 usemathjax: true
 ---
@@ -105,6 +105,8 @@ $$
 
 
 Multiplying both sides by the OD-path incidence matrix:
+
+
 $$
 \begin{eqnarray}
  \Lambda\mathbf{x}  &=& \beta\Lambda\mathbf{x_1} + (1-\beta)\Lambda\mathbf{x_2} \nonumber \\
