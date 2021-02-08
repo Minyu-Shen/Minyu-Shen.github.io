@@ -145,8 +145,27 @@ $$
 \Omega_l := \{\mathbf{v}\mid \Delta^T\mathbf{v} = \mathbf{x}, \Lambda \mathbf{x}=\mathbf{d}, \mathbf{x}\geq 0 \}
 $$
 
+The answer is yes. In this case, $\Omega_l$ can be viewed as the set of all the coefficients $\mathbf{v}$ on which applying the linear operator $\Delta^T$ can induces path $\Omega_p$.
 
-The answer is no, because $\mathbf{x} = \Delta^T \mathbf{v}$ is trying to represent the path flow as the combination of link flow, which is logically wrong! How can we add up the flows of all the links that a path contains?
+ For a particular $\mathbf{x}\in \Omega_p$, there mush exist a $\mathbf{v}$ such that
+
+
+$$
+\Delta \Delta^T \mathbf{v} = \Delta \mathbf{x}
+$$
+
+
+Since $\Delta \Delta^T$ is invertible, we can immediately obtain
+
+
+$$
+\mathbf{v} = (\Delta \Delta^T)^{-1} \Delta\mathbf{x}
+$$
+
+
+However, given a particular $\mathbf{v}\in \Omega_{l}$, there might be numerous $\mathbf{x}$ associated with the given $\mathbf{v}$, because $\Omega_l$ is the total collection that generates $\Omega_p$.
+
+Further note that for a particular $\mathbf{v}$, $\mathbf{x} = \Delta^T \mathbf{v}$ is logically wrong because it is trying to represent the path flow as the combination of link flow! How can we add up the flows of all the links that a path contains?
 
 In addition, given a fixed $\mathbf{x}$, solving the $\Delta^T \mathbf{v}=\mathbf{x}$  generally does not yield a unique solution. The below shows an example network in which the single OD pair has 4 paths and the network contains totally 10 links. Let's arbitrarily choose the path flow as $[1,2,3,4]^T$. By checking the rank of $\Delta^T$ and augmented $[\Delta^T;x]$, we can easily verify that the $\mathbf{v}$ has infinitely many solutions. 
 
