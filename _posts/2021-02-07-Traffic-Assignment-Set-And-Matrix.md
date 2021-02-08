@@ -138,16 +138,17 @@ For $\mathbf{v} = \Delta\mathbf{x}$ , given a $\mathbf{x}$, we can always get a 
 
 ### Some thoughts
 
-For the link flow set $\Omega_l$, I wonder whether we can use the transpose of $\Delta$, just like this?
+For the link flow set $\Omega_l$, you may wonder whether we can apply the linear operator $\Delta^T$ on all the "coefficients" $\mathbf{v}$ to induce the path set $\Omega_p$, like this?
+
 
 
 $$
-\Omega_l := \{\mathbf{v}\mid \Delta^T\mathbf{v} = \mathbf{x}, \Lambda \mathbf{x}=\mathbf{d}, \mathbf{x}\geq 0 \}
+\Omega_l := \{\mathbf{v}\mid \Delta^T\mathbf{v} = \mathbf{x}, \mathbf{x}\in \Omega_p \}
 $$
 
-The answer is no. In this case, $\Omega_l$ can be viewed as the set of all the coefficients $\mathbf{v}$ on which applying the linear operator $\Delta^T$ can induces path $\Omega_p$.
 
- For a particular $\mathbf{x}\in \Omega_p$, there mush exist a $\mathbf{v}$ such that
+
+The answer is no. The reasoning is as follows. In this case, $\Omega_l$ can be viewed as the solution set of linear equations $\Delta^T\mathbf{v} = \mathbf{x}$. Note that $\Delta^T$ is in most case not full-rank, which means even if the set of $\mathbf{v}$ is the entire $R^{\vert A \vert}$, the column space of $\Delta^{T}$ might not contain the whole $\Omega_p$. That is, for a $\mathbf{x}\in \Omega_p$, there might be no corresponding $\mathbf{v}$; i.e., no solution. Formally, we can multiply $\Delta$ at both sides and rewrite the linear equations:
 
 
 $$
@@ -155,12 +156,13 @@ $$
 $$
 
 
-Only when $\Delta$ is full-rank does  $\Delta \Delta^T$ become invertible. Generally it is not the case and the above equation has no solution. Logically, it should also be the case! For a particular $\mathbf{v}$,  $\mathbf{x} = \Delta^T \mathbf{v}$ is trying to represent the path flow as the combination of link flow, which is logically wrong!  How can we add up the flows of all the links that a path contains?
+Only when $\Delta$ is full-rank does  $\Delta \Delta^T$ become invertible and solution exists. Generally it is not the case. Logically, it is also meaningful! For a particular $\mathbf{v}$,  $\mathbf{x} = \Delta^T \mathbf{v}$ is trying to represent the path flow as the combination of link flow, which is logically wrong!  How can we add up the flows of all the links that a path contains?
 
 Moreover, given a particular $\mathbf{v}\in \Omega_{l}$, there might be numerous $\mathbf{x}$ associated with the given $\mathbf{v}$, because $\Omega_l$ is the total collection that generates $\Omega_p$.
 
-In addition, given a fixed $\mathbf{x}$, solving the $\Delta^T \mathbf{v}=\mathbf{x}$  generally does not yield a unique solution. The below shows an example network in which the single OD pair has 4 paths and the network contains totally 10 links. Let's arbitrarily choose the path flow as $[1,2,3,4]^T$. By checking the rank of $\Delta^T$ and augmented $[\Delta^T;x]$, we can easily verify that the $\mathbf{v}$ has infinitely many solutions. 
+### Solution number check
 
+The below shows an example network in which the single OD pair has 4 paths and the network contains totally 10 links. Let's arbitrarily choose the path flow as $[1,2,3,4]^T$. By checking the rank of $\Delta^T$ and augmented $[\Delta^T;x]$, we can easily verify that the $\mathbf{v}$ has infinitely many solutions. 
 
 $$
 \Delta^T = 
