@@ -222,3 +222,22 @@ A metric space is said to be complete if every possible cauchy sequence of the e
   
 
   , which results in the contradiction. 
+
+
+
+#### Proof of $d(f^m(x), f^{m-1}(x)) \leq \gamma^{m-1}d(f(x),x)$
+
+Prove by mathematical induction:
+
+When $m=1$, $d(f(x), x) \leq d(f(x),x)$ is satisfied.
+
+Suppose (i.e., inductive hypothesis) the inequality holds at $m$, let's look at 
+
+
+$$
+d[f^{m+1}(x),f^{m}(x)] = d[f(f^{m}(x)),f(f^{m-1}(x))] \leq \gamma d[f^m(x),f^{m-1}(x)] \leq \gamma\gamma^{m-1}d(f(x),x)
+$$
+
+
+The first inequality is to apply the definition of contraction, and the second inequality is to apply the inductive hypothesis.
+

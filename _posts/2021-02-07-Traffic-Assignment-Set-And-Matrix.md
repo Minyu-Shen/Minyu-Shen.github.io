@@ -136,6 +136,61 @@ $$
 
 For $\mathbf{v} = \Delta\mathbf{x}$ , given a $\mathbf{x}$, we can always get a unique $\mathbf{v}$. However, the reverse may not hold, because the  $\Delta^{-1}$ does not exist for non-square matrix. In reality, the column number (i.e., path No.) is usually much larger than the row number (i.e., link No.). 
 
+
+
+### Traffic equilibrium
+
+It is well-known that when link cost function is symmetric, finding the user-equilibrium flow pattern is equivalent to solving the following optimization problem:
+$$
+\min z(\mathbf{v}) = \sum_{a\in A} \int_{0}^{v_a}t_a(w)dw \\
+\mathbf{v}\in\Omega_l \\
+\Omega_{l} := \{ 
+\mathbf{v}\mid v_a=\sum_{w\in W}\sum_{r\in R_w}{\delta_{a}^{rw}x_{rw}, \mathbf{x}\in \Omega_{p}, \forall a\in A}
+\} \\
+\Omega_p:= \{\mathbf{x}\mid \sum_{r\in R_w}x_{rw} = d_w, x_{rw}\geq 0, \forall w\in W \}
+$$
+This program is convex with respect to link flow variable: the constraint is convex set, as we have already shown; the objective function is the sum of strictly convex functions (an integral of this form is always strictly convex because the second-order derivative is always greater than 0).  
+
+However, the objective function is not convex in path flow variable. To demonstrate, let's write its Hessian matrix. First, let's write the first-order derivative w.r.t. to one particular path $x_{rw}$:
+$$
+\frac{\partial z(\mathbf{v})}{\partial x_{rw}} = \frac{\partial z(\mathbf{v})}{\partial \mathbf{v}} \frac{\partial \mathbf{v}}{\partial x_{rw}} = \sum_a{t_a(v_a)\cdot \delta_a^{rw}} = c_{rw}
+$$
+In vector form, path cost, $c_{rw}$, can be arranged as:
+$$
+\mathbf{c} = \Delta^T \mathbf{t}(\Delta\mathbf{x})
+$$
+each element of which is:
+$$
+c_{rw}= \sum_{a\in A} \delta^{rw}_{a}\cdot t_a(\sum_{w\in W}\sum_{s\in R_w}{\delta^{sw}_{a}x_{sw}})
+$$
+Thus, the Hessian matrix of path flow of the first OD pair is:
+$$
+\begin{bmatrix}
+
+\sum_a{\delta^{r=1,w=1}_a}{t_a^\prime(v_a)}\cdot \delta^{r=1,w=1}_{a} &\sum_a{\delta^{r=1,w=1}_a}{t_a^\prime(v_a)}\cdot \delta^{r=2,w=1}_{a} &\sum_a{\delta^{r=1,w=1}_a}{t_a^\prime(v_a)}\cdot \delta^{r=3,w=1}_{a} &\ldots  \nonumber \\
+
+\sum_a{\delta^{r=2,w=1}_a t_a^\prime(v_a)}\delta_a^{r=1,w=1} &\sum_a{\delta^{r=2,w=1}_a t_a^\prime(v_a)}\cdot \delta^{r=2,w=1}_{a} &\sum_a{\delta^{r=2,w=1}_a t_a^\prime(v_a)}\cdot \delta^{r=3,w=1}_{a} &\ldots  \nonumber \\
+
+\ldots &\ldots &\ddots \nonumber \\
+
+\sum_a{\delta^{r=\lvert R_w\rvert,w=1}_a t_a^\prime(v_a)}\delta_a^{r=1,w=1} & & &\sum_a{\delta^{r=\lvert R_w\rvert ,w=1}_a t_a^\prime(v_a)\delta_a^{r=\lvert R_w \rvert, w=1}}  \nonumber \\
+
+
+\end{bmatrix}
+$$
+
+The above matrix is symmetric. 
+
+In vector form, 
+$$
+\nabla_{\mathbf{x}}{\mathbf{c}} = \Delta^T \begin{bmatrix}
+\frac{\partial t_1}{v_1} & \ldots & 0\\
+\vdots & \ddots & 0 \\
+0 &0 &\frac{\partial t_m}{v_m}
+\end{bmatrix} \Delta
+$$
+where $m$ is the link No.
+
 ### Some thoughts
 
 For the link flow set $\Omega_l$, you may wonder whether we can apply the linear operator $\Delta^T$ on all the "coefficients" $\mathbf{v}$ to induce the path set $\Omega_p$, like this?
@@ -156,7 +211,7 @@ $$
 $$
 
 
-Only when $\Delta$ is full-rank does  $\Delta \Delta^T$ become invertible and solution exists. Generally it is not the case. Logically, it is also meaningful! For a particular $\mathbf{v}$,  $\mathbf{x} = \Delta^T \mathbf{v}$ is trying to represent the path flow as the combination of link flow, which is logically wrong!  How can we add up the flows of all the links that a path contains?
+Only when $\Delta$ is full-row-rank does  $\Delta \Delta^T$ become invertible and solution exists. Generally it is not the case. Logically, it is also meaningful! For a particular $\mathbf{v}$,  $\mathbf{x} = \Delta^T \mathbf{v}$ is trying to represent the path flow as the combination of link flow, which is logically wrong!  How can we add up the flows of all the links that a path contains?
 
 Moreover, given a particular $\mathbf{v}\in \Omega_{l}$, there might be numerous $\mathbf{x}$ associated with the given $\mathbf{v}$, because $\Omega_l$ is the total collection that generates $\Omega_p$.
 
